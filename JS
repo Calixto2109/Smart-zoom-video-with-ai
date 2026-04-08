@@ -1,0 +1,29 @@
+const video = document.getElementById("video");
+const zoomSlider = document.getElementById("zoom");
+
+let scale = 1;
+let posX = 0;
+let posY = 0;
+
+// Zoom
+zoomSlider.addEventListener("input", () => {
+    scale = zoomSlider.value;
+    updateTransform();
+});
+
+// Movimento com mouse
+video.addEventListener("mousemove", (e) => {
+    const rect = video.getBoundingClientRect();
+
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+    posX = x * 50;
+    posY = y * 50;
+
+    updateTransform();
+});
+
+function updateTransform() {
+    video.style.transform = `scale(${scale}) translate(${posX}px, ${posY}px)`;
+}
